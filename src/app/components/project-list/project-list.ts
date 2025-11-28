@@ -52,7 +52,11 @@ export class ProjectListComponent implements OnInit, OnDestroy {
     });
   }
 
-  selectProject(projectId: number): void {
+  selectProject(projectId: number, event?: Event): void {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
     this.selectedProjectId = projectId;
     this.projectSelected.emit(projectId);
   }

@@ -104,6 +104,7 @@
         flex: 1;
         padding: 15px;
         overflow-y: auto;
+        min-height: 200px;
 
         .task-card {
           background: white;
@@ -112,13 +113,32 @@
           border-radius: 6px;
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
           transition: box-shadow 0.2s;
+          position: relative;
+          cursor: grab;
+          display: flex;
+          flex-direction: column;
+
+          &:active {
+            cursor: grabbing;
+          }
 
           &:hover {
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
           }
 
+          &.cdk-drag-preview {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            opacity: 0.9;
+            cursor: grabbing;
+          }
+
+          &.cdk-drag-animating {
+            transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+          }
+
           .task-content {
             margin-bottom: 10px;
+            flex: 1;
 
             h4 {
               margin: 0 0 8px 0;
@@ -137,23 +157,8 @@
           .task-actions {
             display: flex;
             gap: 8px;
-            align-items: center;
-            margin-top: 10px;
-
-            .status-select {
-              flex: 1;
-              padding: 6px;
-              border: 1px solid #dee2e6;
-              border-radius: 4px;
-              font-size: 0.85rem;
-              background-color: white;
-              cursor: pointer;
-
-              &:focus {
-                outline: none;
-                border-color: #007bff;
-              }
-            }
+            align-items: flex-start;
+            justify-content: flex-end;
 
             .btn-delete-task {
               background-color: #dc3545;
@@ -175,6 +180,17 @@
               }
             }
           }
+        }
+
+        &.cdk-drop-list-dragging .task-card:not(.cdk-drag-placeholder) {
+          transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+        }
+
+        .cdk-drag-placeholder {
+          background: #e9ecef;
+          border: 2px dashed #adb5bd;
+          min-height: 80px;
+          border-radius: 6px;
         }
       }
     }

@@ -15,18 +15,17 @@
         <h3>To Do</h3>
         <span class="count">{{ todoTasks.length }}</span>
       </div>
-      <div class="tasks">
-        <div *ngFor="let task of todoTasks" class="task-card">
+      <div class="tasks" cdkDropList
+           #todoList="cdkDropList"
+           [cdkDropListData]="todoTasks"
+           [cdkDropListConnectedTo]="[inProgressList, doneList]"
+           (cdkDropListDropped)="onDrop($event, TaskStatus.TODO)">
+        <div *ngFor="let task of todoTasks" class="task-card" cdkDrag>
           <div class="task-content">
             <h4>{{ task.title }}</h4>
             <p>{{ task.description }}</p>
           </div>
           <div class="task-actions">
-            <select class="status-select" (change)="changeTaskStatus(task, $any($event.target).value)">
-              <option [value]="TaskStatus.TODO" selected>To Do</option>
-              <option [value]="TaskStatus.IN_PROGRESS">In Progress</option>
-              <option [value]="TaskStatus.DONE">Done</option>
-            </select>
             <button class="btn-delete-task" (click)="deleteTask(task.id!, $event)">×</button>
           </div>
         </div>
@@ -38,18 +37,17 @@
         <h3>In Progress</h3>
         <span class="count">{{ inProgressTasks.length }}</span>
       </div>
-      <div class="tasks">
-        <div *ngFor="let task of inProgressTasks" class="task-card">
+      <div class="tasks" cdkDropList
+           #inProgressList="cdkDropList"
+           [cdkDropListData]="inProgressTasks"
+           [cdkDropListConnectedTo]="[todoList, doneList]"
+           (cdkDropListDropped)="onDrop($event, TaskStatus.IN_PROGRESS)">
+        <div *ngFor="let task of inProgressTasks" class="task-card" cdkDrag>
           <div class="task-content">
             <h4>{{ task.title }}</h4>
             <p>{{ task.description }}</p>
           </div>
           <div class="task-actions">
-            <select class="status-select" (change)="changeTaskStatus(task, $any($event.target).value)">
-              <option [value]="TaskStatus.TODO">To Do</option>
-              <option [value]="TaskStatus.IN_PROGRESS" selected>In Progress</option>
-              <option [value]="TaskStatus.DONE">Done</option>
-            </select>
             <button class="btn-delete-task" (click)="deleteTask(task.id!, $event)">×</button>
           </div>
         </div>
@@ -61,18 +59,17 @@
         <h3>Done</h3>
         <span class="count">{{ doneTasks.length }}</span>
       </div>
-      <div class="tasks">
-        <div *ngFor="let task of doneTasks" class="task-card">
+      <div class="tasks" cdkDropList
+           #doneList="cdkDropList"
+           [cdkDropListData]="doneTasks"
+           [cdkDropListConnectedTo]="[todoList, inProgressList]"
+           (cdkDropListDropped)="onDrop($event, TaskStatus.DONE)">
+        <div *ngFor="let task of doneTasks" class="task-card" cdkDrag>
           <div class="task-content">
             <h4>{{ task.title }}</h4>
             <p>{{ task.description }}</p>
           </div>
           <div class="task-actions">
-            <select class="status-select" (change)="changeTaskStatus(task, $any($event.target).value)">
-              <option [value]="TaskStatus.TODO">To Do</option>
-              <option [value]="TaskStatus.IN_PROGRESS">In Progress</option>
-              <option [value]="TaskStatus.DONE" selected>Done</option>
-            </select>
             <button class="btn-delete-task" (click)="deleteTask(task.id!, $event)">×</button>
           </div>
         </div>
@@ -80,4 +77,3 @@
     </div>
   </div>
 </div>
-

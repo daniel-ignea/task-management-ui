@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProjectListComponent } from './components/project-list/project-list';
 import { TaskBoardComponent } from './components/task-board/task-board';
@@ -19,10 +19,19 @@ export class App {
   showProjectForm = false;
   showTaskForm = false;
 
-  constructor(private refreshService: RefreshService) {}
+  constructor(
+    private refreshService: RefreshService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   onProjectSelected(projectId: number): void {
-    this.selectedProjectId = projectId;
+    if (projectId === 0) {
+      this.selectedProjectId = null;
+    } else {
+      this.selectedProjectId = projectId;
+    }
+    // Manually trigger change detection to ensure the binding updates
+    this.cdr.detectChanges();
   }
 
   onCreateProject(): void {
