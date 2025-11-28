@@ -1,0 +1,30 @@
+<div class="app-container">
+  <header class="app-header">
+    <h1>{{ title }}</h1>
+  </header>
+  <div class="app-content">
+    <aside class="sidebar">
+      <app-project-list 
+        (projectSelected)="onProjectSelected($event)"
+        (createProject)="onCreateProject()">
+      </app-project-list>
+    </aside>
+    <main class="main-content">
+      <app-task-board 
+        [projectId]="selectedProjectId"
+        (createTask)="onCreateTask()">
+      </app-task-board>
+    </main>
+  </div>
+  <app-project-form 
+    *ngIf="showProjectForm"
+    (projectCreated)="onProjectCreated()"
+    (cancel)="onCancelProjectForm()">
+  </app-project-form>
+  <app-task-form 
+    *ngIf="showTaskForm && selectedProjectId"
+    [projectId]="selectedProjectId"
+    (taskCreated)="onTaskCreated()"
+    (cancel)="onCancelTaskForm()">
+  </app-task-form>
+</div>

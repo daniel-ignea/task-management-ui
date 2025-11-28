@@ -1,0 +1,35 @@
+<div class="modal-overlay">
+  <div class="modal-content">
+    <h2>Create New Project</h2>
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="name">Project Name *</label>
+        <input
+          type="text"
+          id="name"
+          [(ngModel)]="project.name"
+          name="name"
+          required
+          placeholder="Enter project name"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea
+          id="description"
+          [(ngModel)]="project.description"
+          name="description"
+          rows="4"
+          placeholder="Enter project description"
+        ></textarea>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn-cancel" (click)="onCancel()">Cancel</button>
+        <button type="submit" class="btn-submit" [disabled]="!project.name.trim()">Create Project</button>
+      </div>
+    </form>
+  </div>
+</div>
+

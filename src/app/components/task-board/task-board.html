@@ -1,0 +1,83 @@
+<div class="task-board">
+  <div class="task-board-header" *ngIf="projectId">
+    <h2>Task Board</h2>
+    <button class="btn-create" (click)="onCreateTask()">+ New Task</button>
+  </div>
+
+  <div class="empty-state" *ngIf="!projectId">
+    <h3>Select a project to view tasks</h3>
+    <p>Choose a project from the left sidebar to see its tasks</p>
+  </div>
+
+  <div class="columns" *ngIf="projectId">
+    <div class="column">
+      <div class="column-header todo">
+        <h3>To Do</h3>
+        <span class="count">{{ todoTasks.length }}</span>
+      </div>
+      <div class="tasks">
+        <div *ngFor="let task of todoTasks" class="task-card">
+          <div class="task-content">
+            <h4>{{ task.title }}</h4>
+            <p>{{ task.description }}</p>
+          </div>
+          <div class="task-actions">
+            <select class="status-select" (change)="changeTaskStatus(task, $any($event.target).value)">
+              <option [value]="TaskStatus.TODO" selected>To Do</option>
+              <option [value]="TaskStatus.IN_PROGRESS">In Progress</option>
+              <option [value]="TaskStatus.DONE">Done</option>
+            </select>
+            <button class="btn-delete-task" (click)="deleteTask(task.id!, $event)">×</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="column">
+      <div class="column-header in-progress">
+        <h3>In Progress</h3>
+        <span class="count">{{ inProgressTasks.length }}</span>
+      </div>
+      <div class="tasks">
+        <div *ngFor="let task of inProgressTasks" class="task-card">
+          <div class="task-content">
+            <h4>{{ task.title }}</h4>
+            <p>{{ task.description }}</p>
+          </div>
+          <div class="task-actions">
+            <select class="status-select" (change)="changeTaskStatus(task, $any($event.target).value)">
+              <option [value]="TaskStatus.TODO">To Do</option>
+              <option [value]="TaskStatus.IN_PROGRESS" selected>In Progress</option>
+              <option [value]="TaskStatus.DONE">Done</option>
+            </select>
+            <button class="btn-delete-task" (click)="deleteTask(task.id!, $event)">×</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="column">
+      <div class="column-header done">
+        <h3>Done</h3>
+        <span class="count">{{ doneTasks.length }}</span>
+      </div>
+      <div class="tasks">
+        <div *ngFor="let task of doneTasks" class="task-card">
+          <div class="task-content">
+            <h4>{{ task.title }}</h4>
+            <p>{{ task.description }}</p>
+          </div>
+          <div class="task-actions">
+            <select class="status-select" (change)="changeTaskStatus(task, $any($event.target).value)">
+              <option [value]="TaskStatus.TODO">To Do</option>
+              <option [value]="TaskStatus.IN_PROGRESS">In Progress</option>
+              <option [value]="TaskStatus.DONE" selected>Done</option>
+            </select>
+            <button class="btn-delete-task" (click)="deleteTask(task.id!, $event)">×</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

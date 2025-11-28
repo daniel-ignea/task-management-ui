@@ -1,0 +1,20 @@
+<div class="project-list">
+  <div class="project-list-header">
+    <h2>Projects</h2>
+    <button class="btn-create" (click)="onCreateProject()">+ New Project</button>
+  </div>
+  <div class="projects">
+    <div
+      *ngFor="let project of projects"
+      class="project-item"
+      [class.active]="selectedProjectId === project.id"
+      (click)="selectProject(project.id!)">
+      <div class="project-info">
+        <h3>{{ project.name }}</h3>
+        <p>{{ project.description }}</p>
+      </div>
+      <button class="btn-delete" (click)="deleteProject(project.id!, $event)">×</button>
+    </div>
+  </div>
+</div>
+
